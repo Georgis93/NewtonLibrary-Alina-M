@@ -11,7 +11,10 @@ namespace Newton_Bibliotek_Alina.Models
         public int BookId { get; set; }
         public string Title { get; set; }
         public string ISBN { get; set; }
-        public int RealiseYear { get; set; }
+        public int ReleaseYear { get; set; }
+        public bool IsLoaned { get; set; }
+        public int AuthorId { get; set; }
+        public Author Author { get; set; }
         public Book()
         {
             
