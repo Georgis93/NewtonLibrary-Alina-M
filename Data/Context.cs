@@ -20,14 +20,17 @@ namespace Newton_Bibliotek_Alina.Data
         public DbSet<Borrower> Borrowers { get; set; }
         public DbSet<BookLoan> BookLoans { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("Server=localhost; Database=Newton Bibliotek Alina; Trusted_Connection=True; Trust Server Certificate =Yes; User Id=Bibliotek; password=Bibliotek");
-        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.UseEncryption(this._provider);
 
+            modelBuilder.Entity<BookLoan>()
+          .HasOne(bl => bl.Borrower)
+          .WithMany(b => b.BookLoans)
+           .HasForeignKey(bl => bl.BorrowerId)
+          .OnDelete(DeleteBehavior.NoAction);
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.UseEncryption(this._provider);
         }
         private readonly IEncryptionProvider _provider;
         public Context()
@@ -35,6 +38,18 @@ namespace Newton_Bibliotek_Alina.Data
 
             this._provider = new GenerateEncryptionProvider("adwjhdfidi3232vgkj34ftqrr34ump9f");
         }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer("Server=localhost; Database=Newton Bibliotek Alina; Trusted_Connection=True; Trust Server Certificate =Yes; User Id=NewtonLibrary; password=NewtonLibrary");
+        }
+       /* protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.UseEncryption(this._provider);
+
+        }*/
+       
+       
 
 
     }

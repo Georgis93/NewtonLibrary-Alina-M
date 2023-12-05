@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Newton_Bibliotek_Alina.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -33,6 +33,7 @@ namespace Newton_Bibliotek_Alina.Migrations
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ISBN = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ReleaseYear = table.Column<int>(type: "int", nullable: false),
+                    Rating = table.Column<int>(type: "int", nullable: false),
                     IsLoaned = table.Column<bool>(type: "bit", nullable: false),
                     AuthorId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -87,25 +88,41 @@ namespace Newton_Bibliotek_Alina.Migrations
                 {
                     BookLoanId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    BookId = table.Column<int>(type: "int", nullable: false),
                     BorrowerId = table.Column<int>(type: "int", nullable: false),
                     BorrowedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ReturnedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    ReturnDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_BookLoans", x => x.BookLoanId);
                     table.ForeignKey(
-                        name: "FK_BookLoans_Books_BookId",
-                        column: x => x.BookId,
-                        principalTable: "Books",
-                        principalColumn: "BookId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_BookLoans_Borrowers_BorrowerId",
                         column: x => x.BorrowerId,
                         principalTable: "Borrowers",
-                        principalColumn: "BorrowerId",
+                        principalColumn: "BorrowerId");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BookBookLoan",
+                columns: table => new
+                {
+                    BookLoansBookLoanId = table.Column<int>(type: "int", nullable: false),
+                    BooksBookId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BookBookLoan", x => new { x.BookLoansBookLoanId, x.BooksBookId });
+                    table.ForeignKey(
+                        name: "FK_BookBookLoan_BookLoans_BookLoansBookLoanId",
+                        column: x => x.BookLoansBookLoanId,
+                        principalTable: "BookLoans",
+                        principalColumn: "BookLoanId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BookBookLoan_Books_BooksBookId",
+                        column: x => x.BooksBookId,
+                        principalTable: "Books",
+                        principalColumn: "BookId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -115,9 +132,9 @@ namespace Newton_Bibliotek_Alina.Migrations
                 column: "BooksBookId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BookLoans_BookId",
-                table: "BookLoans",
-                column: "BookId");
+                name: "IX_BookBookLoan_BooksBookId",
+                table: "BookBookLoan",
+                column: "BooksBookId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BookLoans_BorrowerId",
@@ -132,10 +149,13 @@ namespace Newton_Bibliotek_Alina.Migrations
                 name: "AuthorBook");
 
             migrationBuilder.DropTable(
-                name: "BookLoans");
+                name: "BookBookLoan");
 
             migrationBuilder.DropTable(
                 name: "Authors");
+
+            migrationBuilder.DropTable(
+                name: "BookLoans");
 
             migrationBuilder.DropTable(
                 name: "Books");

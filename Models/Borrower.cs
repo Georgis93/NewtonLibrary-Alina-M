@@ -16,7 +16,7 @@ namespace Newton_Bibliotek_Alina.Models
 
         [EncryptColumn]
         public int PIN { get; set; }
-        public ICollection<BookLoan> BookLoans { get; set; } = new List<BookLoan>();
+       public ICollection<BookLoan> BookLoans { get; set; } = new List<BookLoan>();
 
         public Borrower()
         {

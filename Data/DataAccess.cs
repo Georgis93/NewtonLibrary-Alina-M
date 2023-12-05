@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.ConstrainedExecution;
+using System.Security.Authentication.ExtendedProtection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -39,6 +40,11 @@ namespace Newton_Bibliotek_Alina.Data
                 book3.ReleaseYear = 1943;
                 book3.Rating = 4;
 
+                Book book4 = book3;
+                book4.Title = book3.Title;
+                book4.ISBN = book3.ISBN;
+                book4.ReleaseYear = book3.ReleaseYear;
+                book4.Rating = 5;
 
                 Author author1 = new Author();
                 author1.Name = "Mark Twain";
@@ -46,15 +52,14 @@ namespace Newton_Bibliotek_Alina.Data
                 author2.Name = "Karl May";
                 Author author3 = new Author();
                 author3.Name = "Antoine de Saint-Exupéry";
+                Author author4 = author3;
 
                 Borrower borrower1 = new Borrower();
                 borrower1.FirstName = "Alina";
                 borrower1.LastName = "Mititelu";
                 borrower1.LibraryCardNumber = "254906AM54";
                 borrower1.PIN = 15790;
-                book3.IsLoaned = true;
-
-               
+               // book3.IsLoaned = true;
 
                 Borrower borrower2 = new Borrower();
                 borrower2.FirstName = "Sven";
@@ -66,23 +71,46 @@ namespace Newton_Bibliotek_Alina.Data
                 borrower3.FirstName = "Ewa";
                 borrower3.LastName = "Paseri";
                 borrower3.LibraryCardNumber = "58124EP19";
-                borrower3.PIN = 00346;
+                borrower3.PIN = 45346;
 
-                BookLoan bookLoan = new BookLoan();
-                bookLoan.BorrowedDate = DateTime.Now;
-                bookLoan.ReturnDate = DateTime.Now.AddDays(10);
-                borrower1.BookLoans.Add(bookLoan);
-                borrower2.BookLoans.Add(bookLoan);
-                borrower3.BookLoans.Add(bookLoan);
+                Borrower borrower4 = new Borrower();
+                borrower4.FirstName = "Andresi";
+                borrower4.LastName = "Milovici";
+                borrower4.LibraryCardNumber = "5648AM98";
+                borrower4.PIN = 76123;
+
+                DateTime now = DateTime.Now;
+                BookLoan bookLoan1 = new BookLoan();
+                bookLoan1.BorrowedDate = now;
+                bookLoan1.ReturnDate = now.AddDays(10);
+                bookLoan1.Borrower = borrower1;
+                bookLoan1.Books.Add(book1);
+
+                BookLoan bookLoan2 = new BookLoan();
+                bookLoan2.BorrowedDate = now;
+                bookLoan2.ReturnDate = now.AddDays(10);
+                bookLoan2.Borrower = borrower2;
+                bookLoan2.Books.Add(book2);
+
+
+                BookLoan bookLoan3 = new BookLoan();
+                bookLoan3.BorrowedDate = now;
+                bookLoan3.ReturnDate = now.AddDays(10);
+                bookLoan3.Borrower= borrower3;
+                bookLoan3.Books.Add(book3);
+
+                BookLoan bookLoan4 = new BookLoan();
+                bookLoan4.BorrowedDate = now;
+                bookLoan4.ReturnDate = now.AddDays(10);
+                bookLoan4.Borrower= borrower4;
+                bookLoan4.Books.Add(book4);
+                
+                
 
                 context.Books.AddRange(new List<Book>{ book1, book2, book3 });
                 context.Borrowers.AddRange(new List<Borrower> { borrower1, borrower2, borrower3 });
                 context.Authors.AddRange(new List<Author> { author1, author2, author3 });
-                context.BookLoans.Add(bookLoan);
-
-                
-                
-
+                context.BookLoans.AddRange(new List<BookLoan> { bookLoan1,bookLoan2,bookLoan3});
                 context.SaveChanges();
             }
            
@@ -103,7 +131,6 @@ namespace Newton_Bibliotek_Alina.Data
                     // Add a new loaned book
                     BookLoan bookLoan = new BookLoan
                     {
-                        BookId = bookId,
                         BorrowerId = borrowerId,
                         BorrowedDate = DateTime.Now
                     };
@@ -125,14 +152,17 @@ namespace Newton_Bibliotek_Alina.Data
                     // when the book is returned, set it to false
                     book.IsLoaned = false;
 
-                    // return the date of return
-                    BookLoan bookLoan = context.BookLoans.FirstOrDefault(bl => bl.BookId == bookId && bl.ReturnDate == null);
+                    
+
+                  // return the date of return
+                    BookLoan? bookLoan = book.BookLoans.FirstOrDefault(bl => bl.ReturnDate == null);
                     if (bookLoan != null)
                     {
                         bookLoan.ReturnDate = DateTime.Now.AddDays(10);
                     }
 
                     context.SaveChanges();
+                    
                 }
             }
         }
@@ -141,7 +171,7 @@ namespace Newton_Bibliotek_Alina.Data
             //Context context = new Context();
             using (Context context = new Context())
             {
-                Borrower borrower = context.Borrowers.Find(borrowerId);
+                Borrower ? borrower = context.Borrowers.Find(borrowerId);
 
                 if (borrower != null)
                 {
@@ -160,12 +190,12 @@ namespace Newton_Bibliotek_Alina.Data
         {
             using (Context context = new Context())
             {
-                Book book = context.Books.Find(bookId);
+                Book ?book = context.Books.Find(bookId);
 
                 if (book != null)
                 {
                     // Delete everything about the book
-                    List<BookLoan> bookLoans = context.BookLoans.Where(bl => bl.BookId == bookId).ToList();
+                    List<BookLoan> bookLoans = context.BookLoans.Where(bl => bl.BorrowerId == bookId).ToList();
                     context.BookLoans.RemoveRange(bookLoans);
 
                     // Remove the book
@@ -179,7 +209,7 @@ namespace Newton_Bibliotek_Alina.Data
         {
             using (Context context = new Context())
             {
-                Author author = context.Authors.Find(authorId);
+                Author? author = context.Authors.Find(authorId);
 
                 if (author != null)
                 {
@@ -188,7 +218,7 @@ namespace Newton_Bibliotek_Alina.Data
                     foreach (var book in books)
                     {
                         // delete all the borrowed books from the author
-                        List<BookLoan> bookLoans = context.BookLoans.Where(bl => bl.BookId == book.BookId).ToList();
+                        List<BookLoan> bookLoans = context.BookLoans.Where(bl => bl.BorrowerId == book.BookId).ToList();
                         context.BookLoans.RemoveRange(bookLoans);
 
                         // Delete the book

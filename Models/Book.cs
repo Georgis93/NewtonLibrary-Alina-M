@@ -16,7 +16,8 @@ namespace Newton_Bibliotek_Alina.Models
         public bool IsLoaned { get; set; }
         public int AuthorId { get; set; }
         public ICollection<Author> Authors { get; set; } = new List<Author>();
-        public ICollection<BookLoan> Loans { get; set; }= new List<BookLoan>();
+        public ICollection<BookLoan> BookLoans { get; set; }= new List<BookLoan>();
+       
         public Book()
         {
             

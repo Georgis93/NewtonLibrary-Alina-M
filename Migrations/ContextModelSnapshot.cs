@@ -37,6 +37,21 @@ namespace Newton_Bibliotek_Alina.Migrations
                     b.ToTable("AuthorBook");
                 });
 
+            modelBuilder.Entity("BookBookLoan", b =>
+                {
+                    b.Property<int>("BookLoansBookLoanId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BooksBookId")
+                        .HasColumnType("int");
+
+                    b.HasKey("BookLoansBookLoanId", "BooksBookId");
+
+                    b.HasIndex("BooksBookId");
+
+                    b.ToTable("BookBookLoan");
+                });
+
             modelBuilder.Entity("Newton_Bibliotek_Alina.Models.Author", b =>
                 {
                     b.Property<int>("AuthorId")
@@ -72,6 +87,9 @@ namespace Newton_Bibliotek_Alina.Migrations
                     b.Property<bool>("IsLoaned")
                         .HasColumnType("bit");
 
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
                     b.Property<int>("ReleaseYear")
                         .HasColumnType("int");
 
@@ -92,21 +110,16 @@ namespace Newton_Bibliotek_Alina.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookLoanId"));
 
-                    b.Property<int>("BookId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("BorrowedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("BorrowerId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("ReturnedDate")
+                    b.Property<DateTime?>("ReturnDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("BookLoanId");
-
-                    b.HasIndex("BookId");
 
                     b.HasIndex("BorrowerId");
 
@@ -156,21 +169,28 @@ namespace Newton_Bibliotek_Alina.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Newton_Bibliotek_Alina.Models.BookLoan", b =>
+            modelBuilder.Entity("BookBookLoan", b =>
                 {
-                    b.HasOne("Newton_Bibliotek_Alina.Models.Book", "Book")
+                    b.HasOne("Newton_Bibliotek_Alina.Models.BookLoan", null)
                         .WithMany()
-                        .HasForeignKey("BookId")
+                        .HasForeignKey("BookLoansBookLoanId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Newton_Bibliotek_Alina.Models.Book", null)
+                        .WithMany()
+                        .HasForeignKey("BooksBookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Newton_Bibliotek_Alina.Models.BookLoan", b =>
+                {
                     b.HasOne("Newton_Bibliotek_Alina.Models.Borrower", "Borrower")
                         .WithMany("BookLoans")
                         .HasForeignKey("BorrowerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
-
-                    b.Navigation("Book");
 
                     b.Navigation("Borrower");
                 });
