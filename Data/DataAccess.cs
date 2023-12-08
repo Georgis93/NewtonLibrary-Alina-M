@@ -174,6 +174,8 @@ namespace Newton_Bibliotek_Alina.Data
            // context.BookLoans.AddRange(new List<BookLoan> { bookLoan1 });//bookLoan2, bookLoan3, bookLoan4, bookLoan5, bookLoan6, bookLoan7, bookLoan8 });
 
             context.SaveChanges();
+            Console.WriteLine($"Your Libary have: 1.{book1.Title}{author1}\n 2.{book2.Title}{author2}\n 3.{book2.Title}{author3}\n 4.{book4.Title}{author4}\n 5.{book5.Title}{author5}\n 6.{book6.Title}{author6}\n 7.{book7.Title}{author7}\n 8.{book8.Title}{author8}\n");
+            Console.WriteLine($"Your Customer are: 1.{borrower1.FirstName}{borrower1.LastName}\n\n 2.{borrower2.FirstName}{borrower2.LastName}\n 3.{borrower3.FirstName}{borrower3.LastName}\n 4.{borrower4.FirstName}{borrower4.LastName}\n 5.{borrower5.FirstName}{borrower5.LastName}\n");
 
         }
 
@@ -198,9 +200,12 @@ namespace Newton_Bibliotek_Alina.Data
                         ReturnDate = DateTime.Now.AddDays(11),  //added days that a borrower can have the book
                         BookId = bookId
                     };
+
                     context.BookLoans.Add(bookLoan);
+                   
 
                     context.SaveChanges();
+                    Console.WriteLine($"{book.Title} was borrowed by {borrower.FirstName}");
                 }
             }
 
@@ -216,17 +221,21 @@ namespace Newton_Bibliotek_Alina.Data
                     // when the book is returned, set it to false
                     book.IsLoaned = false;
 
-                    BookLoan bookLoan = context.BookLoans.Find(bookId);
+                    /* BookLoan bookLoan = context.BookLoans.Find(bookId);
 
-                    if (bookLoan != null)
-                    {
-                        bookLoan.BorrowedDate = null;
-                        bookLoan.ReturnDate = DateTime.Now;
-                        //bookLoan.BorrowerId = borrowerId;
-                        bookLoan.BookId = bookId;
-                    }
-                   
+                     if (bookLoan != null)
+                     {
+                         bookLoan.BorrowedDate = null;
+                         bookLoan.ReturnDate = DateTime.Now;
+                         //bookLoan.BorrowerId = borrowerId;
+                         bookLoan.BookId = bookId;
+                     }*/
+
+                    
+
+
                     context.SaveChanges();
+                    Console.WriteLine($"{book.Title} was returned");
                 }
             }
         }
@@ -247,6 +256,7 @@ namespace Newton_Bibliotek_Alina.Data
                     context.Borrowers.Remove(borrower);
 
                     context.SaveChanges();
+                    Console.WriteLine($"{borrower.LastName} was removed from Library>! ");
                 }
             }
         }
@@ -264,8 +274,9 @@ namespace Newton_Bibliotek_Alina.Data
 
                     // Remove the book
                     context.Books.Remove(book);
-
+                  
                     context.SaveChanges();
+                    Console.WriteLine($"{book.Title} was removed from Library!");
                 }
             }
         }
@@ -291,8 +302,9 @@ namespace Newton_Bibliotek_Alina.Data
 
                     // delete the author
                     context.Authors.Remove(author);
-
+                 
                     context.SaveChanges();
+                    Console.WriteLine($"{author.Name} was removed from Library!");
                 }
             }
            
