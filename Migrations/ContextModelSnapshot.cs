@@ -110,6 +110,9 @@ namespace Newton_Bibliotek_Alina.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookLoanId"));
 
+                    b.Property<int>("BookId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("BorrowedDate")
                         .HasColumnType("datetime2");
 
@@ -186,13 +189,13 @@ namespace Newton_Bibliotek_Alina.Migrations
 
             modelBuilder.Entity("Newton_Bibliotek_Alina.Models.BookLoan", b =>
                 {
-                    b.HasOne("Newton_Bibliotek_Alina.Models.Borrower", "Borrower")
+                    b.HasOne("Newton_Bibliotek_Alina.Models.Borrower", "Borrowers")
                         .WithMany("BookLoans")
                         .HasForeignKey("BorrowerId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("Borrower");
+                    b.Navigation("Borrowers");
                 });
 
             modelBuilder.Entity("Newton_Bibliotek_Alina.Models.Borrower", b =>

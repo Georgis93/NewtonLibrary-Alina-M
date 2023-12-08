@@ -17,108 +17,169 @@ namespace Newton_Bibliotek_Alina.Data
 
         public void Seed()
         {
-            using (Context context = new Context())
+            using Context context = new();
+            Book book1 = new()
             {
-                //Context context = new Context();
-                Book book1 = new();
-                book1.Title = "The Adventures of Tom Sawyer";
-                book1.ISBN = "10:0-385-48602-8";
-                book1.ReleaseYear = 1876;
-                book1.IsLoaned = true;
-                book1.Rating = 4;
+                Title = "The Adventures of Tom Sawyer",
+                ISBN = "10:0-385-48602-8",
+                ReleaseYear = 1876,
+                Rating = 4,
+                AuthorId = 1
+            };
 
-                Book book2 = new();
-                book2.Title = "Winnetou";
-                book2.ISBN = "13:978-0-307-98702-1";
-                book2.ReleaseYear = 1842;
-                book2.IsLoaned = false;
-                book2.Rating = 5;
+            Book book2 = new()
+            {
+                Title = "Winnetou Series: 1,2,3 ",
+                ISBN = "13:978-0-307-98702-1",
+                ReleaseYear = 1842,
+                IsLoaned = false,
+                Rating = 5,
+                AuthorId = 2
+            };
 
-                Book book3 = new();
-                book3.Title = "The Little Prince";
-                book3.ISBN = "13:978-0-9791860-3-0";
-                book3.ReleaseYear = 1943;
-                book3.Rating = 4;
+            Book book3 = new()
+            {
+                Title = "The Little Prince",
+                ISBN = "13:978-0-9791860-3-0",
+                ReleaseYear = 1943,
+                Rating = 4,
+                AuthorId = 3
+            };
 
-                Book book4 = book3;
-                book4.Title = book3.Title;
-                book4.ISBN = book3.ISBN;
-                book4.ReleaseYear = book3.ReleaseYear;
-                book4.Rating = 5;
+            Book book4 = new()
+            {
+                Title = book3.Title,
+                ISBN = book3.ISBN,
+                ReleaseYear = book3.ReleaseYear,
+                Rating = 5,
+                AuthorId = 4
+            };
 
-                Author author1 = new Author();
-                author1.Name = "Mark Twain";
-                Author author2 = new Author();
-                author2.Name = "Karl May";
-                Author author3 = new Author();
-                author3.Name = "Antoine de Saint-Exupéry";
-                Author author4 = author3;
+            Book book5 = new()
+            {
+                Title = "Harry Potter and the Philosopher's Stone",
+                ISBN = "1:086-3-756-12097-2",
+                ReleaseYear = 1997,
+                Rating = 5,
+                AuthorId = 5
+            };
 
-                Borrower borrower1 = new Borrower();
-                borrower1.FirstName = "Alina";
-                borrower1.LastName = "Mititelu";
-                borrower1.LibraryCardNumber = "254906AM54";
-                borrower1.PIN = 15790;
-               // book3.IsLoaned = true;
+            Book book6 = new()
+            {
+                Title = "Harry Potter and the Chamber of Secrets",
+                ISBN = "1:045-9-775-1231-4",
+                ReleaseYear = 1998,
+                Rating = 5,
+                AuthorId = 6
+            };
 
-                Borrower borrower2 = new Borrower();
-                borrower2.FirstName = "Sven";
-                borrower2.LastName = "Andersson";
-                borrower2.LibraryCardNumber = "55678SV04";
-                borrower2.PIN = 47845;
+            Book book7 = new()
+            {
+                Title = "Harry Potter and the Prisoner of Azkaban",
+                ISBN = "14:675-2-998-7754-1",
+                ReleaseYear = 1999,
+                Rating = 5,
+                AuthorId =7
+            };
 
-                Borrower borrower3 = new Borrower();
-                borrower3.FirstName = "Ewa";
-                borrower3.LastName = "Paseri";
-                borrower3.LibraryCardNumber = "58124EP19";
-                borrower3.PIN = 45346;
-
-                Borrower borrower4 = new Borrower();
-                borrower4.FirstName = "Andresi";
-                borrower4.LastName = "Milovici";
-                borrower4.LibraryCardNumber = "5648AM98";
-                borrower4.PIN = 76123;
-
-                DateTime now = DateTime.Now;
-                BookLoan bookLoan1 = new BookLoan();
-                bookLoan1.BorrowedDate = now;
-                bookLoan1.ReturnDate = now.AddDays(10);
-                bookLoan1.Borrower = borrower1;
-                bookLoan1.Books.Add(book1);
-
-                BookLoan bookLoan2 = new BookLoan();
-                bookLoan2.BorrowedDate = now;
-                bookLoan2.ReturnDate = now.AddDays(10);
-                bookLoan2.Borrower = borrower2;
-                bookLoan2.Books.Add(book2);
+            Book book8 = new()
+            {
+                Title = "Harry Potter and the Goblet of Fire",
+                ISBN = "11:453-0-223-8104-1",
+                ReleaseYear = 2000,
+                Rating = 5,
+                AuthorId = 8
+            };
 
 
-                BookLoan bookLoan3 = new BookLoan();
-                bookLoan3.BorrowedDate = now;
-                bookLoan3.ReturnDate = now.AddDays(10);
-                bookLoan3.Borrower= borrower3;
-                bookLoan3.Books.Add(book3);
+            Author author1 = new()
+            {
+                Name = "Mark Twain"
+            };
+            Author author2 = new()
+            {
+                Name = "Karl May"
+            };
+            Author author3 = new()
+            {
+                Name = "Antoine de Saint-Exupéry"
+            };
+            Author author4 = new()
+            {
+                Name = author3.Name
+            };
+            Author author5 = new()
+            {
+                Name = "J.K.Rowling"
+            };
+            Author author6 = new()
+            {
+                Name = author5.Name
+            };
+            Author author7 = new()
+            {
+                Name = author5.Name
+            };
+            Author author8 = new()
+            {
+                Name = author5.Name
+            };
 
-                BookLoan bookLoan4 = new BookLoan();
-                bookLoan4.BorrowedDate = now;
-                bookLoan4.ReturnDate = now.AddDays(10);
-                bookLoan4.Borrower= borrower4;
-                bookLoan4.Books.Add(book4);
-                
-                
+            Borrower borrower1 = new()
+            {
+                FirstName = "Alina",
+                LastName = "Mititelu",
+                LibraryCardNumber = "254906AM54",
+                PIN = 15790
+            };
+            
 
-                context.Books.AddRange(new List<Book>{ book1, book2, book3 });
-                context.Borrowers.AddRange(new List<Borrower> { borrower1, borrower2, borrower3 });
-                context.Authors.AddRange(new List<Author> { author1, author2, author3 });
-                context.BookLoans.AddRange(new List<BookLoan> { bookLoan1,bookLoan2,bookLoan3});
-                context.SaveChanges();
-            }
-           
+            Borrower borrower2 = new()
+            {
+                FirstName = "Sven",
+                LastName = "Andersson",
+                LibraryCardNumber = "55678SV04",
+                PIN = 47845
+            };
+
+            Borrower borrower3 = new()
+            {
+                FirstName = "Ewa",
+                LastName = "Paseri",
+                LibraryCardNumber = "58124EP19",
+                PIN = 45346
+            };
+
+            Borrower borrower4 = new()
+            {
+                FirstName = "Andresi",
+                LastName = "Milovici",
+                LibraryCardNumber = "5648AM98",
+                PIN = 76123
+            };
+
+            Borrower borrower5 = new()
+            {
+                FirstName = borrower2.FirstName,
+                LastName = borrower2.LastName,
+                LibraryCardNumber = borrower2.LibraryCardNumber,
+                PIN = borrower2.PIN
+            };
+
+
+
+            context.Books.AddRange(new List<Book> { book1, book2, book3, book4, book5, book6, book7, book8 });
+            context.Borrowers.AddRange(new List<Borrower> { borrower1, borrower2, borrower3, borrower4, borrower5 });
+            context.Authors.AddRange(new List<Author> { author1, author2, author3, author4, author5, author6, author7, author8 });
+           // context.BookLoans.AddRange(new List<BookLoan> { bookLoan1 });//bookLoan2, bookLoan3, bookLoan4, bookLoan5, bookLoan6, bookLoan7, bookLoan8 });
+
+            context.SaveChanges();
+
         }
 
         public void BorrowBook(int bookId, int borrowerId)
         {
-            using (Context context = new Context())
+            using (Context context = new())
             {
                 Book book = context.Books.Find(bookId);
                 Borrower borrower = context.Borrowers.Find(borrowerId);
@@ -129,10 +190,13 @@ namespace Newton_Bibliotek_Alina.Data
                     book.IsLoaned = true;
 
                     // Add a new loaned book
-                    BookLoan bookLoan = new BookLoan
+                    BookLoan bookLoan = new()
                     {
+                        // i added even bookId because is easier to follow which book is borrowed 
                         BorrowerId = borrowerId,
-                        BorrowedDate = DateTime.Now
+                        BorrowedDate = DateTime.Now,
+                        ReturnDate = DateTime.Now.AddDays(11),  //added days that a borrower can have the book
+                        BookId = bookId
                     };
                     context.BookLoans.Add(bookLoan);
 
@@ -143,7 +207,7 @@ namespace Newton_Bibliotek_Alina.Data
         }
         public void ReturnBook(int bookId)
         {
-            using (Context context = new Context())
+            using (Context context = new())
             {
                 Book book = context.Books.Find(bookId);
 
@@ -152,24 +216,24 @@ namespace Newton_Bibliotek_Alina.Data
                     // when the book is returned, set it to false
                     book.IsLoaned = false;
 
-                    
+                    BookLoan bookLoan = context.BookLoans.Find(bookId);
 
-                  // return the date of return
-                    BookLoan? bookLoan = book.BookLoans.FirstOrDefault(bl => bl.ReturnDate == null);
                     if (bookLoan != null)
                     {
-                        bookLoan.ReturnDate = DateTime.Now.AddDays(10);
+                        bookLoan.BorrowedDate = null;
+                        bookLoan.ReturnDate = DateTime.Now;
+                        //bookLoan.BorrowerId = borrowerId;
+                        bookLoan.BookId = bookId;
                     }
-
+                   
                     context.SaveChanges();
-                    
                 }
             }
         }
         public void DeleteBorrower(int borrowerId)
         {
             //Context context = new Context();
-            using (Context context = new Context())
+            using (Context context = new())
             {
                 Borrower ? borrower = context.Borrowers.Find(borrowerId);
 
@@ -230,6 +294,24 @@ namespace Newton_Bibliotek_Alina.Data
 
                     context.SaveChanges();
                 }
+            }
+           
+
+           
+          
+        }
+        public List<Book> GetLoanedBooks()
+        {
+            using (Context context = new())
+            {
+                return context.Books.Where(book => book.IsLoaned).ToList();
+            }
+        }
+        public List<Book> GetAvailableBooks()
+        {
+            using (Context context = new Context())
+            {
+                return context.Books.Where(book => !book.IsLoaned).ToList();
             }
         }
     }
