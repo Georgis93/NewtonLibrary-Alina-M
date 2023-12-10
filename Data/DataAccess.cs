@@ -312,19 +312,5 @@ namespace Newton_Bibliotek_Alina.Data
            
           
         }
-        public List<Book> GetLoanedBooks()
-        {
-            using (Context context = new())
-            {
-                return context.Books.Where(book => book.IsLoaned).ToList();
-            }
-        }
-        public List<Book> GetAvailableBooks()
-        {
-            using (Context context = new Context())
-            {
-                return context.Books.Where(book => !book.IsLoaned).ToList();
-            }
-        }
     }
 }
