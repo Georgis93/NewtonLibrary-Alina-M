@@ -234,7 +234,7 @@ namespace Newton_Bibliotek_Alina.Data
             }
         }
 
-        public void AddBorrowerToDatabase(string firstName, string lastName, string libraryCardNumber)
+        public void CreateBorrow(string firstName, string lastName, string libraryCardNumber)
         {
             using (var context = new Context())
             {
@@ -270,7 +270,7 @@ namespace Newton_Bibliotek_Alina.Data
                 }
             }
         }
-        public void AddBookToDatabase(string title, params int[] authorIds)
+        public void CreateBook(string title, params int[] authorIds)
         {
             using (var context = new Context())
             {
@@ -309,7 +309,7 @@ namespace Newton_Bibliotek_Alina.Data
                 }
             }
         }
-        public void AddAuthorToDatabase(string name)
+        public void CreateBook(string name)
         {
             using (var context = new Context())
             {

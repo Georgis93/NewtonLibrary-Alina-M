@@ -13,20 +13,19 @@ namespace Newton_Bibliotek_Alina
 
             //dataAccess.Seed();  
             // dataAccess.BorrowBook(8, 3); // Låna en bok
-            // dataAccess.ReturnBook(8);       // Lämna tillbaka en bok
+            // dataAccess.ReturnBook(8);   // Lämna tillbaka en bok
 
-
-            //dataAccess.AddBookToDatabase("The Little Prince", 3); // Lägg till bok i databasen
+            //dataAccess.CreateBook("The Little Prince", 3); // Lägg till bok i databasen
             // dataAccess.DeleteBook(9);  // Ta bort en book från databasen 
 
-           // dataAccess.AddAuthorToDatabase("Karl May"); // 
+           // dataAccess.CreateAuthor("Karl May"); // 
             //dataAccess.DeleteAuthor(9); // 
 
-            //dataAccess.AddBorrowerToDatabase("Alina", "Mititelu", "254906AM54");
+            //dataAccess.CreateBorrower("Alina", "Mititelu", "254906AM54");
             //dataAccess.DeleteBorrower(9); // Ta bort borrower med ID 
 
             //dataAccess.DeleteBook(3);      // Ta bort book med ID 
-            dataAccess.DeleteAuthor(11);    // Ta bort author med ID 
+            //dataAccess.DeleteAuthor(11);    // Ta bort author med ID 
 
 
 
