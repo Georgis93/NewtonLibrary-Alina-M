@@ -80,10 +80,6 @@ namespace Newton_Bibliotek_Alina.Migrations
                     b.Property<int>("AuthorId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ISBN")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("IsLoaned")
                         .HasColumnType("bit");
 

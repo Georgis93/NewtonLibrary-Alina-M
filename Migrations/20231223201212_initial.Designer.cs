@@ -12,8 +12,8 @@ using Newton_Bibliotek_Alina.Data;
 namespace Newton_Bibliotek_Alina.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20231208104012_init")]
-    partial class init
+    [Migration("20231223201212_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -82,10 +82,6 @@ namespace Newton_Bibliotek_Alina.Migrations
 
                     b.Property<int>("AuthorId")
                         .HasColumnType("int");
-
-                    b.Property<string>("ISBN")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsLoaned")
                         .HasColumnType("bit");
